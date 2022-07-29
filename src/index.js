@@ -1,4 +1,5 @@
 const aax = require("./exchanges/aax-client");
+const aex = require("./exchanges/aex-client");
 const ascendex = require("./exchanges/ascendex-client");
 const bequant = require("./exchanges/bequant-client");
 const bibox = require("./exchanges/bibox-client");
@@ -20,6 +21,7 @@ const coinex = require("./exchanges/coinex-client");
 const coinflex = require("./exchanges/coinflex-client");
 const crypto = require("./exchanges/crypto-client");
 const ethfinex = require("./exchanges/ethfinex-client");
+const exmo = require("./exchanges/exmo-client");
 const fmfw = require("./exchanges/fmfw-client");
 const ftx = require("./exchanges/ftx-client");
 const ftxus = require("./exchanges/ftx-us-client");
@@ -42,6 +44,7 @@ const digifinex = require("./exchanges/digifinex-client");
 module.exports = {
   // export all legacy exchange names
   aax,
+  aex,
   ascendex,
   bequant,
   bibox,
@@ -64,6 +67,7 @@ module.exports = {
   crypto,
   ethfinex,
   digifinex,
+  exmo,
   ftx,
   ftxus,
   fmfw,
