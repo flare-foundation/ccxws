@@ -819,33 +819,5 @@ class KucoinClient extends BasicClient {
   }
 }
 
-function candlePeriod(period) {
-  switch (period) {
-    case CandlePeriod._1m:
-      return "1min";
-    case CandlePeriod._3m:
-      return "3min";
-    case CandlePeriod._15m:
-      return "15min";
-    case CandlePeriod._30m:
-      return "30min";
-    case CandlePeriod._1h:
-      return "1hour";
-    case CandlePeriod._2h:
-      return "2hour";
-    case CandlePeriod._4h:
-      return "4hour";
-    case CandlePeriod._6h:
-      return "6hour";
-    case CandlePeriod._8h:
-      return "8hour";
-    case CandlePeriod._12h:
-      return "12hour";
-    case CandlePeriod._1d:
-      return "1day";
-    case CandlePeriod._1w:
-      return "1week";
-  }
-}
 
 module.exports = KucoinClient;

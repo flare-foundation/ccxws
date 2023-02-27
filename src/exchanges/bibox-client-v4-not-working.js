@@ -6,15 +6,21 @@ const Level2Update = require("../level2-update");
 const Level2Snapshot = require("../level2-snapshot");
 const https = require("../https");
 
-class PoloniexClient extends BasicClient {
-  constructor({ wssPath = "wss://ws.poloniex.com/ws/public", autoloadSymbolMaps = false, watcherMs } = {}) {
-    super(wssPath, "Poloniex", undefined, watcherMs);
+class BiboxClient extends BasicClient {
+  constructor({ wssPath = "wss://market-wss.bibox360.com", watcherMs } = {}) {
+    super(wssPath, "Bibox", undefined, watcherMs);
+    this.id = 1;
     this.hasTickers = true;
     this.hasTrades = true;
     this.hasLevel2Updates = false;
-    this._subbedToTickers = false;
 
-    setInterval(this._sendPing.bind(this), 15*1000);
+    setInterval(function () {
+      if(this._wss) {        
+          this._wss.ping(Date.now())
+      }
+    },30000)
+
+    // setInterval(this._sendPing.bind(this), 15*1000);
   }
 
   _sendPing() {
@@ -44,42 +50,42 @@ class PoloniexClient extends BasicClient {
   }
 
   _sendSubscribe(channel, remote_id) {
+    console.log(channel, remote_id);
     this._wss.send(
       JSON.stringify({
-        event: "subscribe",
-        channel: [channel],
-        symbols: [remote_id]
+        id: 123,
+        method: "SUBSCRIBE",
+        params: [`${remote_id}.${channel}`]
       })
     );
   }
 
   _sendUnsubscribe(channel, remote_id) {
-
     this._wss.send(
       JSON.stringify({
-        event: "unsubscribe",
-        channel: [channel],
-        symbols: [remote_id]
+        method: "UNSUBSCRIBE",
+        params: [`${remote_id}.${channel}`]
       })
     );
   }
 
   _onMessage(raw) {
+    console.log(raw);
     let msg = JSON.parse(raw);
 
     if(msg.event == 'pong') {
       this.emit("ping");
-    } else if(msg.channel == 'trades' && msg.data) {
-      for(let datum of msg.data) {
-        let market = this._tradeSubs.get(datum.symbol);
-        if(market) {
+    } else if(msg.stream && msg.stream.endsWith('.trades') && msg.data) {
+      let market = this._tradeSubs.get( msg.stream.split(".")[0] );
+      if(market) {
+        for(let datum of msg.data) {
           let trade = this._constructTrades(datum, market);
-          this.emit("trade", trade, market);          
+          this.emit("trade", trade, market);
         }
       }
     } else if(msg.channel == 'ticker' && msg.data) {
       for(let datum of msg.data) {
-        let market = this._tickerSubs.get(datum.symbol);
+        let market = this._tradeSubs.get(datum.symbol);
         if(market) {
           let ticker = this._constructTicker(datum, market);
           this.emit("ticker", ticker, market);          
@@ -93,7 +99,7 @@ class PoloniexClient extends BasicClient {
     let { symbol, dailyChange, high, amount, quantity, tradeCount, low, closeTime, startTime, close, open, ts } = datum;
 
     return new Ticker({
-      exchange: "Poloniex",
+      exchange: "Bibox",
       base: market.base,
       quote: market.quote,
       timestamp: ts,
@@ -106,19 +112,19 @@ class PoloniexClient extends BasicClient {
   }
 
   _constructTrades(datum, market) {
-    let { symbol, amount, quantity, takerSide, createTime, price, id, ts } = datum;
+    let { i, p, q, s, t } = datum;
 
     return new Trade({
-      exchange: "Poloniex",
+      exchange: "Bibox",
       base: market.base,
       quote: market.quote,
-      tradeId: id,
-      side: takerSide,
-      unix: ts,
-      price: price,
-      amount: amount
+      tradeId: i,
+      side: s,
+      unix: t,
+      price: p,
+      amount: q
     });
   }
 }
 
-module.exports = PoloniexClient;
+//module.exports = BiboxClient;

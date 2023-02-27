@@ -40,6 +40,35 @@ const poloniex = require("./exchanges/poloniex-client");
 const upbit = require("./exchanges/upbit-client");
 const zb = require("./exchanges/zb-client");
 const digifinex = require("./exchanges/digifinex-client");
+const whitebit = require("./exchanges/whitebit-client");
+const xt = require("./exchanges/xt-client");
+const dcoin = require("./exchanges/dcoin-client");
+const bitget = require("./exchanges/bitget-client");
+const coindcx = require("./exchanges/coindcx-client");
+const currency = require("./exchanges/currency-client");
+const bkex = require("./exchanges/bkex-client");
+const phemex = require("./exchanges/phemex-client");
+const bitcom = require("./exchanges/bitcom-client");
+const coinlist = require("./exchanges/coinlist-client");
+const bithumbpro = require("./exchanges/bithumbpro-client");
+const btcturk = require("./exchanges/btcturk-client");
+const woo = require("./exchanges/woo-client");
+const p2pb2b = require("./exchanges/p2pb2b-client");
+const latoken = require("./exchanges/latoken-client");
+const btse = require("./exchanges/btse-client");
+const deepcoin = require("./exchanges/deepcoin-client");
+const coinfield = require("./exchanges/coinfield-client");
+const coinsbit = require("./exchanges/coinsbit-client");
+const bingx = require("./exchanges/bingx-client");
+const btcex = require("./exchanges/btcex-client");
+const bigone = require("./exchanges/bigone-client");
+const hotcoin = require("./exchanges/hotcoin-client");
+const localtrade = require("./exchanges/localtrade-client");
+const biconomy = require("./exchanges/biconomy-client");
+const jubi = require("./exchanges/jubi-client");
+const changelly = require("./exchanges/changelly-client");
+const nominex = require("./exchanges/nominex-client");
+const tidex = require("./exchanges/tidex-client");
 
 module.exports = {
   // export all legacy exchange names
@@ -88,6 +117,35 @@ module.exports = {
   poloniex,
   upbit,
   zb,
+  whitebit,
+  xt,
+  dcoin,
+  bitget,
+  coindcx,
+  currency,
+  bkex,
+  phemex,
+  bitcom,
+  coinlist,
+  bithumbpro,
+  btcturk,
+  woo,
+  p2pb2b,
+  latoken,
+  btse,
+  deepcoin,
+  coinfield,
+  coinsbit,
+  bingx,
+  btcex,
+  bigone,
+  hotcoin,
+  localtrade,
+  biconomy,
+  jubi,
+  changelly,
+  nominex,
+  tidex,
 
   // export all exchanges
   Ascendex: ascendex,
